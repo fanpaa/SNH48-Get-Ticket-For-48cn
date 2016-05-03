@@ -18,11 +18,13 @@
 
 #### 更新日志
 
+[2016.05.03] 增加SNH48，BEJ48，GNZ48切票支持
+
 [2016.04.19] 粗糙的第一版
 
 #### 感谢
 
-https://github.com/saintwinkle/SNH48-Get-Ticket 
+https://github.com/saintwinkle/SNH48-Get-Ticket
 
 #### LICENSE
 
