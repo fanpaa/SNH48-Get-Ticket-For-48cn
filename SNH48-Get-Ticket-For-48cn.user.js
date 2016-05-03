@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SNH48 Get Ticket for 48.cn
 // @namespace    https://github.com/fanpaa/SNH48-Get-Ticket-For-48cn
-// @version      0.1
+// @version      0.2
 // @description  SNH48新官方商城抢票脚本
 // @author       fanpaa
 // @match        http://shop.48.cn/tickets/item/*
@@ -52,7 +52,7 @@ $(function() {
                             break;
                         case "fail":
                             layer.msg(result.Message);
-                            break;                  
+                            break;
                         default:
                             _loop();
                     }
@@ -66,30 +66,35 @@ $(function() {
         });
     }
 
-    $.ajax({
-        url: _url,
-        type: "post",
-        dataType: "json",
-        data: { id: _id, num: _num, seattype:_seattype, r: Math.random() },
-        success: function (result) {
-            if (result.HasError) {
-                //失败操作
-                layer.msg(result.Message);
-            }
-            else {
-                if(result.Message =="success")
-                {
-                    window.location.href = result.ReturnObject;
-                }else
-                {
-                    _loop();
+
+    function init(){
+        $.ajax({
+            url: _url,
+            type: "post",
+            dataType: "json",
+            data: { id: _id, num: _num, seattype:_seattype, r: Math.random(), brand_id:$('body script').text().match(/brand_id:(\d+)/)[1] },
+            success: function (result) {
+                if (result.HasError) {
+                    //失败操作
+                    layer.msg(result.Message);
                 }
+                else {
+                    if(result.Message =="success")
+                    {
+                        window.location.href = result.ReturnObject;
+                    }else
+                    {
+                        _loop();
+                    }
+                }
+            },
+            error: function (e) {
+                layer.msg("下单异常,请刷新重试");
             }
-        },
-        error: function (e) {
-            layer.msg("下单异常,请刷新重试");
-        }
-    });
+        });
+    }
+
+    init();
 
     console.info('===>link block!');
 });
